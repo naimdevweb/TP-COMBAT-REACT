@@ -1,3 +1,242 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Orbitron:wght@400;700;900&display=swap');
+
 .card-monstre {
-  margin-top: 10px;
+  position: relative;
+  background: linear-gradient(135deg, #300606, #150303);
+  border: 2px solid #c00;
+  border-radius: 20px;
+  padding: 20px;
+  margin: 30px 0 50px;
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.2), inset 0 0 15px rgba(255, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+/* Effet d'aura autour de la carte */
+.card-monstre::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background: radial-gradient(circle at center, transparent, rgba(255, 0, 0, 0.1));
+  border-radius: 25px;
+  z-index: -1;
+  animation: pulse 3s infinite alternate;
+}
+
+/* Effet de brouillard rouge à l'intérieur de la carte */
+.card-monstre::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="3" /><feColorMatrix type="matrix" values="1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .1 0" /></filter><rect width="100%" height="100%" filter="url(%23noise)" fill="none" opacity="0.5" /></svg>');
+  opacity: 0.1;
+  z-index: -1;
+}
+
+#monsterCard {
+  position: relative;
+  z-index: 2;
+}
+
+/* Style du titre du monstre */
+.monster-name {
+  font-family: 'Cinzel', serif;
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 0 10px #f00, 0 0 20px #c00;
+  margin-bottom: 15px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+/* Container pour l'image */
+.monster-image-container {
+  position: relative;
+  width: 350px;
+  height: 350px;
+  margin: 30px auto;
+  padding: 20px; /* Ajout d'un padding pour réduire l'espace utilisable */
+  box-sizing: border-box;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
+}
+
+.monster-image {
+  width: 100%;
+  height: 100%;
+  object-fit: scale-down; /* Alternative à contain qui fonctionne parfois mieux */
+}
+
+.monster-aura {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at center, rgba(255, 0, 0, 0.2) 0%, transparent 70%);
+  pointer-events: none;
+  animation: auraPulse 3s infinite alternate;
+  z-index: 1;
+}
+.monster-image:hover {
+  transform: scale(1.1);
+}
+
+@keyframes auraPulse {
+  from { opacity: 0.3; }
+  to { opacity: 0.7; }
+}
+
+/* Indicateur de force */
+.strength-indicator {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #f00;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: bold;
+  border: 1px solid #c00;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.strength-indicator i {
+  color: #f00;
+}
+
+/* Badge pour les dégâts */
+.damage-badge {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(220, 20, 60, 0.9);
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(220, 20, 60, 0.7);
+  z-index: 10;
+  display: none;
+}
+
+.damage-badge.show {
+  display: block;
+  animation: damagePopIn 0.5s forwards;
+}
+
+/* Style pour la barre de progression */
+.monster-progress-container {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  height: 25px;
+  margin: 20px auto;
+  overflow: hidden;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.7);
+  position: relative;
+  max-width: 80%;
+  border: 1px solid #c00;
+}
+
+.monster-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #ff0000, #ff6666);
+  border-radius: 12px;
+  transition: width 0.5s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Effet de scintillement sur la barre de progression */
+.monster-progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+.monster-hp-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-weight: bold;
+  font-family: 'Orbitron', sans-serif;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+  z-index: 1;
+}
+
+/* Animations */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.3;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+  }
+  50% {
+    opacity: 0.6;
+    box-shadow: 0 0 40px rgba(255, 0, 0, 0.5);
+  }
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+@keyframes monsterBreathing {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+@keyframes damagePopIn {
+  0% { transform: translateX(-50%) scale(0); }
+  50% { transform: translateX(-50%) scale(1.5); }
+  70% { transform: translateX(-50%) scale(0.8); }
+  100% { transform: translateX(-50%) scale(1); }
+}
+
+/* Effet de secousse lorsque le monstre subit des dégâts */
+.monster-damaged {
+  animation: monsterDamage 0.5s;
+}
+
+@keyframes monsterDamage {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-10px); }
+  40% { transform: translateX(10px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(5px); }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .monster-name {
+    font-size: 1.8rem;
+  }
+  
+  .monster-image-container {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .monster-progress-container {
+    max-width: 90%;
+  }
 }

@@ -1,40 +1,65 @@
 import './Monster.css';
-import ProgressBar from "../ProgressBar/ProgressBar";
 import { useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
+import image from '../../assets/dg.webp';
 
 function Monster() {
-    // Le hook useSelector nous permet d'extraire des données du store Redux
-    const monster = useSelector((state) => state.fight.monster);
+  const monster = useSelector((state) => state.fight.monster);
+  const [damaged, setDamaged] = useState(false);
+  const [prevHp, setPrevHp] = useState(monster.pv);
+
+  // Détecte quand le monstre subit des dégâts
+  useEffect(() => {
+    if (prevHp > monster.pv) {
+      setDamaged(true);
+      setTimeout(() => setDamaged(false), 600);
+    }
+    setPrevHp(monster.pv);
+  }, [monster.pv, prevHp]);
+
+  const hpPercentage = (monster.pv / monster.pvMax) * 100;
+
   return (
     <section>
       <div className="container">
         <div className="row">
           <div className="card-monstre col-sm-12">
-            <div id="monsterCard">
+            <div id="monsterCard" className={damaged ? 'monster-damaged' : ''}>
               <div className="text-center">
-                <div className="row">
-                  <div className="col-sm-2 offset-sm-3">
-                    <span
-                      className="badge badge-danger ml-2 "
-                      id="degatSpanMonster"
-                    ></span>
-                    <img
-                      className="img-fluid"
-                      src="http://res.publicdomainfiles.com/pdf_view/67/13925387417373.png"
-                      alt="monster"
-                    />
-                  </div>
-
-                  <div id="comboOnMonster" className="col-sm-6"></div>
+                <h2 className="monster-name">{monster.name}</h2>
+                
+                <div className="strength-indicator">
+                  <i className="fas fa-fist-raised"></i>
+                  <span>Force: {monster.strength}</span>
+                </div>
+                
+                <div className="monster-image-container">
+  <img
+    className="monster-image"
+    src={image}
+    alt="monster"
+    style={{ objectFit: 'contain', width: '100%', height: '100%' }}
+  />
+  <div className="monster-aura"></div>
+</div>
+                
+                <span
+                  className={`damage-badge ${damaged ? 'show' : ''}`}
+                  id="degatSpanMonster"
+                >
+                  {prevHp - monster.pv}
+                </span>
+              </div>
+              
+              <div className="monster-progress-container">
+                <div 
+                  className="monster-progress-bar"
+                  style={{ width: `${hpPercentage}%` }}
+                ></div>
+                <div className="monster-hp-text">
+                  <i className="fas fa-heart"></i> {monster.pv}/{monster.pvMax}
                 </div>
               </div>
-              <ProgressBar
-                pv={monster.pv}
-                pvMax={monster.pvMax}
-                bgType="bg-danger"
-                faType="fa-heart"
-                barName=" : pv"
-              />
             </div>
           </div>
         </div>

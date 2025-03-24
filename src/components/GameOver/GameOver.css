@@ -1,0 +1,74 @@
+.game-over-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.5s ease;
+  }
+  
+  .game-over-modal {
+    background-color: #fff;
+    color: #333;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+    max-width: 90%;
+    width: 400px;
+    animation: scaleIn 0.4s ease;
+  }
+  
+  .victory-title {
+    color: #28a745;
+    font-size: 2.5rem;
+    text-shadow: 0 0 10px rgba(40, 167, 69, 0.5);
+  }
+  
+  .defeat-title {
+    color: #dc3545;
+    font-size: 2.5rem;
+    text-shadow: 0 0 10px rgba(220, 53, 69, 0.5);
+  }
+  
+  .trophy, .skull {
+    font-size: 4rem;
+    margin: 1rem 0;
+  }
+  
+  .restart-button {
+    margin-top: 1.5rem;
+    font-size: 1.2rem;
+    padding: 0.75rem 2rem;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+  }
+  
+  .restart-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes scaleIn {
+    from { 
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    to { 
+      transform: scale(1);
+      opacity: 1;
+    }
+  }

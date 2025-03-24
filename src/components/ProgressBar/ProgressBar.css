@@ -1,18 +1,52 @@
-.icon-text {
-  color: white;
+/* General Progress Bar Styles */
+.progress {
+  position: relative;
+  width: 100%;
+  height: 20px;
+  background-color: #2a2a2a;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
 }
 
 .progress-bar {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -ms-flex-pack: center;
-  justify-content: center;
-  color: #fff;
-  text-align: center;
-  white-space: nowrap;
-  background-color: #007bff;
-  transition: width 0.6s ease;
   height: 100%;
+  text-align: center;
+  line-height: 20px;
+  font-weight: bold;
+  font-size: 14px;
+  transition: width 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Health Bar (Red) */
+.health-bar {
+  background: linear-gradient(90deg, #ff0000, #cc0000);
+  color: #fff;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+/* Mana Bar (Blue) */
+.mana-bar {
+  background: linear-gradient(90deg, #0099ff, #0055cc);
+  color: #fff;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+/* Accessibility: Ensure high contrast when bar is low */
+@media (prefers-reduced-motion: reduce) {
+  .progress-bar {
+    transition: none;
+  }
+}
+
+/* When HP or MP is low, change colors */
+.health-bar.low {
+  background: linear-gradient(90deg, #ff8800, #ff2200);
+}
+
+.mana-bar.low {
+  background: linear-gradient(90deg, #77bbff, #3377cc);
 }

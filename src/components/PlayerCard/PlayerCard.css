@@ -1,0 +1,709 @@
+/* PlayerCard.css - Redesign complet avec thème RPG futuriste */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap');
+
+/* Ajout pour le conteneur des joueurs */
+.players-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    gap: 20px;
+    padding: 20px;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  
+  /* Modification des cartes pour qu'elles s'alignent correctement */
+  .card {
+    /* Supprimer la duplication de cette classe qui existe déjà plus haut */
+    flex: 0 0 auto; /* Empêche la carte de s'étirer */
+    margin: 0 5px; /* Réduit les marges horizontales */
+    max-width: 300px; /* Limite la largeur pour que plus de cartes tiennent */
+  }
+  
+  @media (min-width: 992px) {
+    .players-container {
+      flex-wrap: nowrap; /* Sur grand écran, pas de retour à la ligne */
+      overflow-x: auto; /* Permet le défilement horizontal si nécessaire */
+    }
+  }
+
+.card {
+  --main-color: #0cf;
+  --accent-color: #f06;
+  --dark-bg: #0d1117;
+  --card-bg: #161b22;
+  --border-glow: 0 0 15px var(--main-color);
+  
+  background: linear-gradient(135deg, #1a1f29, #0d1117);
+  border: 1px solid rgba(12, 204, 255, 0.3);
+  border-radius: 16px;
+  box-shadow: 0 7px 30px rgba(0, 0, 0, 0.7), inset 0 0 10px rgba(12, 204, 255, 0.1);
+  margin: 20px;
+  padding: 0;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  min-width: 300px;
+  max-width: 350px;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at center,
+    transparent 30%,
+    rgba(12, 204, 255, 0.03) 70%,
+    transparent 100%
+  );
+  animation: pulseGlow 8s infinite;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  animation: shimmer 6s infinite;
+}
+
+.card:hover {
+  transform: translateY(-15px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 15px rgba(12, 204, 255, 0.4);
+  border-color: rgba(12, 204, 255, 0.6);
+}
+
+.card-header {
+  background: linear-gradient(180deg, rgba(12, 204, 255, 0.2), transparent);
+  border-radius: 16px 16px 0 0;
+  padding: 15px 10px;
+  position: relative;
+  text-align: center;
+}
+
+.card-title {
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 0;
+  text-shadow: 0 0 8px rgba(12, 204, 255, 0.8);
+  letter-spacing: 2px;
+}
+
+.card-body {
+  padding: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Indicateurs de statistiques */
+.stat-container {
+  margin-bottom: 1.5rem;
+}
+
+.stat-label {
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.2rem;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.stat-label i {
+  margin-right: 8px;
+  filter: drop-shadow(0 0 3px var(--main-color));
+}
+
+.progress-container {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  height: 12px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.5s ease;
+}
+
+.hp-bar {
+  background: linear-gradient(90deg, #f06, #ff5e62);
+  box-shadow: 0 0 10px rgba(255, 0, 102, 0.7);
+}
+
+.mana-bar {
+  background: linear-gradient(90deg, #0cf, #36D1DC);
+  box-shadow: 0 0 10px rgba(12, 204, 255, 0.7);
+}
+
+.stat-value {
+  position: absolute;
+  right: 50%;
+  transform: translateX(50%);
+
+  top: 230px;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+/* Section des capacités */
+.abilities-section {
+  margin-top: 20px;
+}
+
+.abilities-title {
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-align: center;
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.abilities-title::before,
+.abilities-title::after {
+  content: '';
+  height: 1px;
+  width: 40px;
+  background: linear-gradient(90deg, transparent, var(--main-color), transparent);
+  position: absolute;
+  top: 50%;
+}
+
+.abilities-title::before {
+  left: 20px;
+}
+
+.abilities-title::after {
+  right: 20px;
+}
+/* Style pour le conteneur d'image du héros */
+.hero-image-container {
+  position: relative;
+  width: 150px; /* Augmenté pour mieux voir les images */
+  height: 150px; /* Augmenté pour mieux voir les images */
+  margin: 0 auto 15px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+  border: 2px solid gold;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+/* Style pour les héros KO */
+.hero-ko .hero-image {
+  filter: grayscale(1) brightness(0.7);
+}
+
+.ko-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: red;
+  font-size: 2rem;
+  font-weight: bold;
+  text-shadow: 0 0 5px black;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.7; }
+  50% { opacity: 1; }
+  100% { opacity: 0.7; }
+}
+
+/* Effet hover sur les cartes des héros */
+.card:hover .hero-image {
+  transform: scale(1.1);
+}
+
+/* Ajustements spécifiques pour chaque héros */
+
+/* Pour Ezio (Warrior) */
+#joueur1 .hero-image {
+  object-fit: cover;
+  object-position: center 30%; /* Déplace le focus vers le haut pour voir le visage */
+  transform: scale(1.2); /* Agrandit l'image pour mieux cadrer */
+}
+
+/* Pour Kratos (Archer) */
+#joueur2 .hero-image {
+  object-fit: cover;
+  object-position: center 20%; /* Ajustez selon besoin */
+}
+
+/* Pour Witcher (Mage) */
+#joueur3 .hero-image {
+  object-fit: cover;
+  object-position: center 25%; /* Ajustez selon besoin */
+}
+
+/* Pour Gandalf (Paladin) */
+#joueur4 .hero-image {
+  object-fit: cover;
+  object-position: center 15%; /* Focus sur le visage */
+}
+
+
+
+
+.abilities-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px; /* Espacement augmenté entre les boutons */
+    margin-top: 10px;
+  }
+/* Badge pour dégâts */
+.damage-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(220, 53, 69, 0.9);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(220, 53, 69, 0.7);
+  z-index: 10;
+  transform: scale(0);
+  animation: damagePopIn 0.5s forwards;
+}
+
+/* Effet de dégâts */
+.damaged {
+  animation: damagePulse 0.5s ease-in-out;
+}
+
+/* Effet de guérison */
+.healed {
+  animation: healPulse 0.5s ease-in-out;
+}
+
+/* Animations */
+@keyframes shimmer {
+  0% { left: -100%; }
+  20% { left: 100%; }
+  100% { left: 100%; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes damagePopIn {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.5); }
+  70% { transform: scale(0.8); }
+  100% { transform: scale(1); }
+}
+
+@keyframes damagePulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
+  70% { box-shadow: 0 0 0 20px rgba(255, 0, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+}
+
+@keyframes healPulse {
+  0% { box-shadow: 0 0 0 0 rgba(0, 255, 0, 0.7); }
+  70% { box-shadow: 0 0 0 20px rgba(0, 255, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 255, 0, 0); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card {
+    margin: 15px 10px;
+    min-width: 280px;
+  }
+  
+  .abilities-container {
+    grid-template-columns: 1fr;
+  }
+}
+.card {
+  --main-color: #0cf;
+  --accent-color: #f06;
+  --dark-bg: #0d1117;
+  --card-bg: #161b22;
+  --border-glow: 0 0 15px var(--main-color);
+  
+  background: linear-gradient(135deg, #1a1f29, #0d1117);
+  border: 1px solid rgba(12, 204, 255, 0.3);
+  border-radius: 16px;
+  box-shadow: 0 7px 30px rgba(0, 0, 0, 0.7), inset 0 0 10px rgba(12, 204, 255, 0.1);
+  margin: 20px;
+  padding: 0;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  min-width: 300px;
+  max-width: 350px;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at center,
+    transparent 30%,
+    rgba(12, 204, 255, 0.03) 70%,
+    transparent 100%
+  );
+  animation: pulseGlow 8s infinite;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  animation: shimmer 6s infinite;
+}
+
+.card:hover {
+  transform: translateY(-15px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 15px rgba(12, 204, 255, 0.4);
+  border-color: rgba(12, 204, 255, 0.6);
+}
+
+.card-header {
+  background: linear-gradient(180deg, rgba(12, 204, 255, 0.2), transparent);
+  border-radius: 16px 16px 0 0;
+  padding: 15px 10px;
+  position: relative;
+  text-align: center;
+}
+
+.card-title {
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 0;
+  text-shadow: 0 0 8px rgba(12, 204, 255, 0.8);
+  letter-spacing: 2px;
+}
+
+.card-body {
+  padding: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Indicateurs de statistiques */
+.stat-container {
+  margin-bottom: 1.5rem;
+}
+
+.stat-label {
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.2rem;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.stat-label i {
+  margin-right: 8px;
+  filter: drop-shadow(0 0 3px var(--main-color));
+}
+
+.progress-container {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  height: 12px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.5s ease;
+}
+
+.hp-bar {
+  background: linear-gradient(90deg, #f06, #ff5e62);
+  box-shadow: 0 0 10px rgba(255, 0, 102, 0.7);
+}
+
+.mana-bar {
+  background: linear-gradient(90deg, #0cf, #36D1DC);
+  box-shadow: 0 0 10px rgba(12, 204, 255, 0.7);
+}
+
+.stat-value-mana {
+  position: absolute;
+  right: 50%;
+  transform: translateX(50%);
+  top: 285px;
+  z-index: 3;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+/* Section des capacités */
+.abilities-section {
+  margin-top: 20px;
+}
+
+.abilities-title {
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-align: center;
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.abilities-title::before,
+.abilities-title::after {
+  content: '';
+  height: 1px;
+  width: 40px;
+  background: linear-gradient(90deg, transparent, var(--main-color), transparent);
+  position: absolute;
+  top: 50%;
+}
+
+.abilities-title::before {
+  left: 20px;
+}
+
+.abilities-title::after {
+  right: 20px;
+}
+
+.abilities-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+/* Badge pour dégâts */
+.damage-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(220, 53, 69, 0.9);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(220, 53, 69, 0.7);
+  z-index: 10;
+  transform: scale(0);
+  animation: damagePopIn 0.5s forwards;
+}
+
+/* Effet de dégâts */
+.damaged {
+  animation: damagePulse 0.5s ease-in-out;
+}
+
+/* Effet de guérison */
+.healed {
+  animation: healPulse 0.5s ease-in-out;
+}
+
+.btn {
+    padding: 10px 8px !important; /* Padding augmenté */
+    border-radius: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    border: none;
+    cursor: pointer;
+    min-height: 90px; /* Hauteur minimale augmentée */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  }
+  
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .btn span:first-child {
+    font-size: 0.85rem; /* Taille de police légèrement réduite */
+    line-height: 1.2;
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5px;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    font-family: 'Orbitron', sans-serif; /* Police plus techno */
+    white-space: nowrap; /* Empêche le retour à la ligne */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Ajoute des points de suspension si le texte est trop long */
+  }
+  
+  .btn i {
+    font-size: 1.5rem !important; /* Taille d'icône augmentée */
+    margin: 3px 0;
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4));
+  }
+  
+  /* Dégâts et coût en mana mieux positionnés */
+  .btn i.fa-fire-alt {
+    font-size: 0.9rem !important;
+    color: #0cf;
+    margin: 0 3px;
+  }
+  
+  /* Styles des boutons par couleur avec dégradés améliorés */
+  .btn-success {
+    background: linear-gradient(45deg, #28a745, #20c997);
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+  }
+
+  .btn-primary {
+    background: linear-gradient(45deg, #007bff, #6610f2);
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+  }
+  
+  .btn-danger {
+    background: linear-gradient(45deg, #dc3545, #ff6b6b);
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
+  }
+  
+  .btn-info {
+    background: linear-gradient(45deg, #17a2b8, #0dcaf0);
+    box-shadow: 0 4px 15px rgba(23, 162, 184, 0.4);
+  }
+  
+  .btn-warning {
+    background: linear-gradient(45deg, #ffc107, #ff9800);
+    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.4);
+  }
+
+  .btn-dark {
+    background: linear-gradient(45deg, #343a40, #495057);
+    box-shadow: 0 4px 15px rgba(52, 58, 64, 0.4);
+  }
+  
+  /* Responsive - Ajustement pour petits écrans */
+  @media (max-width: 768px) {
+    .abilities-container {
+      grid-template-columns: 1fr; /* Une seule colonne sur mobile */
+      gap: 10px;
+    }
+    .btn {
+        min-height: 80px; /* Légèrement plus petit sur mobile */
+      }
+    }
+
+
+/* Animations */
+@keyframes shimmer {
+  0% { left: -100%; }
+  20% { left: 100%; }
+  100% { left: 100%; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes damagePopIn {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.5); }
+  70% { transform: scale(0.8); }
+  100% { transform: scale(1); }
+}
+
+@keyframes damagePulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
+  70% { box-shadow: 0 0 0 20px rgba(255, 0, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+}
+
+@keyframes healPulse {
+  0% { box-shadow: 0 0 0 0 rgba(0, 255, 0, 0.7); }
+  70% { box-shadow: 0 0 0 20px rgba(0, 255, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 255, 0, 0); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card {
+    margin: 15px 10px;
+    min-width: 280px;
+  }
+  
+  .abilities-container {
+    grid-template-columns: 1fr;
+  }
+}

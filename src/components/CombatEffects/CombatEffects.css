@@ -1,0 +1,45 @@
+.combat-effects-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    pointer-events: none;
+  }
+  
+  .missed-attack-effect {
+    animation: missedEffect 2s ease forwards;
+  }
+  
+  .missed-attack-effect span {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 
+      0 0 10px #ff0000,
+      0 0 20px #ff0000,
+      0 0 30px #ff0000;
+    font-family: 'Impact', sans-serif;
+    letter-spacing: 2px;
+    transform: rotate(-15deg);
+    display: block;
+  }
+  
+  @keyframes missedEffect {
+    0% {
+      opacity: 0;
+      transform: scale(0.5) rotate(-15deg);
+    }
+    20% {
+      opacity: 1;
+      transform: scale(1.2) rotate(-5deg);
+    }
+    80% {
+      opacity: 1;
+      transform: scale(1) rotate(-15deg);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0.8) rotate(-20deg);
+    }
+  }
