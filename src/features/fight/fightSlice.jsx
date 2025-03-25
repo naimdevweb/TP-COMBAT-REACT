@@ -4,63 +4,64 @@ const initialState = {
   players: [
     { 
       name: "Ezio", 
-      pv: 100, 
-      pvMax: 100, 
-      mana: 30, 
-      manaMax: 30, 
+      pv: 120, 
+      pvMax: 120, 
+      mana: 40, 
+      manaMax: 40, 
       id: 1,
       capacities: [
-        { name: "Coup Puissant", damage: 5, manaCost: 5, icon: "fa-hammer", color: "success" },
-        { name: "Attaque Basique", damage: 3, manaCost: 0, icon: "fa-fist-raised", color: "secondary", isBasic: true },
-        { name: "Méditation", damage: 0, manaCost: 0, icon: "fa-brain", color: "info", effect: "mana" },
-        { name: "Explosion", damage: 15, manaCost: 15, icon: "fa-bomb", color: "danger" }
+        { name: "Frappe Dévastatrice", damage: 12, manaCost: 8, icon: "fa-hammer", color: "success" },
+        { name: "Coup Rapide", damage: 5, manaCost: 0, icon: "fa-fist-raised", color: "secondary", isBasic: true },
+        { name: "Focus", damage: 0, manaCost: 0, icon: "fa-brain", color: "info", effect: "mana" },
+        { name: "Explosion Énergétique", damage: 25, manaCost: 20, icon: "fa-bomb", color: "danger" }
       ]
     },
+   
     { 
       name: "Kratos", 
-      pv: 100, 
-      pvMax: 100, 
-      mana: 30, 
-      manaMax: 30, 
+      pv: 150, 
+      pvMax: 150, 
+      mana: 35, 
+      manaMax: 35, 
       id: 2,
       capacities: [
-        { name: "Flèche Rapide", damage: 6, manaCost: 4, icon: "fa-bullseye-arrow", color: "success" },
-        { name: "Soin Divin", damage: 0, manaCost: 8, icon: "fa-hand-holding-heart", color: "danger", effect: "heal" },
-        { name: "Attaque Basique", damage: 3, manaCost: 0, icon: "fa-fist-raised", color: "secondary", isBasic: true },
-        { name: "Pluie de Flèches", damage: 12, manaCost: 12, icon: "fa-arrows", color: "primary" }
+        { name: "Tir Précis", damage: 15, manaCost: 6, icon: "fa-bullseye-arrow", color: "success" },
+        { name: "Bénédiction Curative", damage: 0, manaCost: 10, icon: "fa-hand-holding-heart", color: "danger", effect: "heal" },
+        { name: "Coup Rapide", damage: 5, manaCost: 0, icon: "fa-fist-raised", color: "secondary", isBasic: true },
+        { name: "Pluie Mortelle", damage: 20, manaCost: 15, icon: "fa-arrows", color: "primary" }
       ]
     },
     { 
-      name: "Gandalf", 
-      pv: 100, 
-      pvMax: 100, 
-      mana: 30, 
-      manaMax: 30, 
+      name: "Geralt", 
+      pv: 110, 
+      pvMax: 110, 
+      mana: 50, 
+      manaMax: 50, 
       id: 3,
       capacities: [
-        { name: "Éclair Foudroyant", damage: 7, manaCost: 6, icon: "fa-bolt", color: "warning" },
-        { name: "Boule de Feu", damage: 10, manaCost: 10, icon: "fa-fire", color: "danger" },
-        { name: "Attaque Basique", damage: 3, manaCost: 0, icon: "fa-fist-raised", color: "secondary", isBasic: true },
-        { name: "Météore Dévastateur", damage: 20, manaCost: 20, icon: "fa-meteor", color: "dark" }
+        { name: "Foudre Divine", damage: 18, manaCost: 8, icon: "fa-bolt", color: "warning" },
+        { name: "Inferno", damage: 25, manaCost: 15, icon: "fa-fire", color: "danger" },
+        { name: "Coup Rapide", damage: 5, manaCost: 0, icon: "fa-fist-raised", color: "secondary", isBasic: true },
+        { name: "Apocalypse", damage: 40, manaCost: 25, icon: "fa-meteor", color: "dark" }
       ]
     },
     { 
       name: "JuL", 
-      pv: 100, 
-      pvMax: 100, 
-      mana: 30, 
-      manaMax: 30, 
+      pv: 200, 
+      pvMax: 200, 
+      mana: 100, 
+      manaMax: 100, 
       id: 4,
       capacities: [
-        { name: "Attaque Basique", damage: 3, manaCost: 0, icon: "fa-fist-raised", color: "secondary", isBasic: true },
-        { name: "Vol de Vie", damage: 8, manaCost: 8, icon: "fa-heartbeat", color: "danger", effect: "lifesteal" },
-        { name: "Protection Divine", damage: 0, manaCost: 5, icon: "fa-shield-virus", color: "info", effect: "protect" },
-        { name: "Folie Furieuse", damage: 18, manaCost: 18, icon: "fa-skull", color: "dark" }
+        { name: "Attaque Basique", damage: 10, manaCost: 0, icon: "fa-fist-raised", color: "secondary", isBasic: true },
+        { name: "Tir de Pistolet", damage: 20, manaCost: 8, icon: "fa-gun", color: "danger", effect: "lifesteal" },
+        { name: "La Hagra Protectrice", damage: 0, manaCost: 5, icon: "fa-shield-virus", color: "info", effect: "protect" },
+        { name: "Rafale de Mitraillette", damage: 50, manaCost: 18, icon: "fa-skull", color: "dark" }
       ]
     }
   ],
   monster: {
-    name: "Dragon", pv: 200, pvMax: 200, strength: 15
+    name: "Dragon", pv: 250, pvMax: 250, strength: 20
   },
   lastAttackMissed: false,
   gameState: "playing", // "playing", "victory", "defeat"
@@ -252,8 +253,26 @@ export const fightSlice = createSlice({
       if (effect === "heal") {
         // Capacité de soin
         const healAmount = damage || 10;
-        player.pv = Math.min(player.pvMax, player.pv + healAmount);
-        state.battleLog.push(`${player.name} se soigne de ${healAmount} PV.`);
+        
+        // Si targetId est fourni, soignez ce joueur spécifique
+        if (action.payload.targetId) {
+          const targetPlayer = state.players.find(p => p.id === action.payload.targetId);
+          if (targetPlayer) {
+            const oldPv = targetPlayer.pv;
+            targetPlayer.pv = Math.min(targetPlayer.pvMax, targetPlayer.pv + healAmount);
+            const actualHeal = targetPlayer.pv - oldPv;
+            
+            if (targetPlayer.id === playerId) {
+              state.battleLog.push(`${player.name} se soigne de ${actualHeal} PV.`);
+            } else {
+              state.battleLog.push(`${player.name} soigne ${targetPlayer.name} de ${actualHeal} PV.`);
+            }
+          }
+        } else {
+          // Comportement par défaut: soigner soi-même
+          player.pv = Math.min(player.pvMax, player.pv + healAmount);
+          state.battleLog.push(`${player.name} se soigne de ${healAmount} PV.`);
+        }
       } 
       else if (effect === "mana") {
         // Régénération de mana

@@ -27,6 +27,7 @@
       overflow-x: auto; /* Permet le défilement horizontal si nécessaire */
     }
   }
+  
 
 .card {
   --main-color: #0cf;
